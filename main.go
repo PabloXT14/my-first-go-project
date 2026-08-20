@@ -1,9 +1,7 @@
 package main
 
-import (
-	system_types_and_constants "my-first-go-project/03_system_types_and_constants"
-)
+import arrays "my-first-go-project/04_arrays"
 
 func main() {
-	system_types_and_constants.Execute()
+	arrays.Execute()
 }
