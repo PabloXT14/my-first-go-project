@@ -1,7 +1,7 @@
 package main
 
-import arrays "my-first-go-project/04_arrays"
+import loops "my-first-go-project/05_loops"
 
 func main() {
-	arrays.Execute()
+	loops.Execute()
 }
