@@ -1,7 +1,7 @@
 package main
 
-import ifs "my-first-go-project/06_ifs"
+import switches "my-first-go-project/07_switches"
 
 func main() {
-	ifs.Execute()
+	switches.Execute()
 }
