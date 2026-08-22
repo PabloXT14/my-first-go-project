@@ -1,7 +1,7 @@
 package main
 
-import loops "my-first-go-project/05_loops"
+import ifs "my-first-go-project/06_ifs"
 
 func main() {
-	loops.Execute()
+	ifs.Execute()
 }
