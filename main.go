@@ -1,9 +1,7 @@
 package main
 
-import deferContent "my-first-go-project/08_defer"
+import stack_e_heap "my-first-go-project/09_stack_e_heap"
 
 func main() {
-	deferContent.Execute()
-
-	println("End of main()")
+	stack_e_heap.Execute()
 }
