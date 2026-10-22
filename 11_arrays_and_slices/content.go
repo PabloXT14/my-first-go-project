@@ -2,91 +2,50 @@ package arrays_and_slices
 
 import "fmt"
 
-func Arrays() {
-	var numbers [3]int = [3]int{1, 2, 3}
-
-	numbers[1] = 20
-
-	fmt.Println("Array:", numbers)
-	fmt.Println("Element at index 1:", numbers[1])
-
-	a := [3]int{10, 20, 30}
-	b := a
-
-	b[0] = 99
-
-	fmt.Println("Array a:", a)
-	fmt.Println("Array b:", b)
+var MOVIES_ON_DB = []string{
+	"The Shawshank Redemption",
+	"The Godfather",
+	"The Dark Knight",
+	"Pulp Fiction",
+	"The Lord of the Rings: The Return of the King",
+	"Schindler's List",
+	"Fight Club",
+	"Inception",
+	"Forrest Gump",
+	"The Matrix",
+	"Goodfellas",
+	"Star Wars: Episode IV - A New Hope",
+	"The Silence of the Lambs",
+	"The Usual Suspects",
+	"Léon: The Professional",
+	"Saving Private Ryan",
+	"Gladiator",
 }
 
 func Slices() {
-	slice := []int{1, 2, 3}
+	// Performance with slices
+	resultsFromApi := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10} // think it as the ids from favorite movies
 
-	slice[1] = 20
+	// Pre allocate our slice of movies to have the same size from resultsFromApi, since we know the size of the results from the API will be 10
+	movies := make([]string, 0, len(resultsFromApi)) // make(type, length, capacity), 0 is the initial length from our slice in this case
 
-	fmt.Println("Slice:", slice)
-	fmt.Println("Length of slice:", len(slice))
-	fmt.Println("Capacity of slice:", cap(slice))
+	for _, id := range resultsFromApi {
+		movie := MOVIES_ON_DB[id]
 
-	fmt.Println("------------------------------------------------------------")
+		fmt.Println("Movies length", len(movies), "Movies capacity", cap(movies))
 
-	numbers2 := []int{10, 20, 30, 40, 50}
+		movies = append(movies, movie)
 
-	slices := numbers2[1:4] // seleciona os elementos do índice 1 até antes do índice 4
-	// Regras importantes
-	/*
-		- numbers[:3] → elementos dos índices `0` a `2`.
-		- numbers[2:] → elementos do índice `2` até o final.
-		- numbers[:] → todos os elementos.
-	*/
+		fmt.Println("Movies length", len(movies), "Movies capacity", cap(movies))
+	}
 
-	fmt.Println("Slice2:", slices)
+	fmt.Println(movies)
+}
 
-	fmt.Println("------------------------------------------------------------")
+func Matrix() {
+	matrix := [][]int{}
+	matrix3D := [][][]int{}
 
-	numbers3 := [3]int{10, 20, 30}
-	slice3 := numbers3[0:3]
-
-	slice3[0] = 99
-
-	fmt.Println("Slice3:", slice3)
-	fmt.Println("Numbers3:", numbers3)
-
-	fmt.Println("------------------------------------------------------------")
-
-	original := []int{10, 20, 30}
-	clone := make([]int, len(original))
-
-	copy(clone, original)
-
-	clone[0] = 99
-
-	fmt.Println("Original:", original)
-	fmt.Println("Clone:", clone)
-
-	fmt.Println("------------------------------------------------------------")
-
-	numbers4 := [5]int{10, 20, 30, 40, 50}
-	slice4 := numbers4[1:3]
-
-	fmt.Println("Length of slice4:", len(slice4))
-	fmt.Println("Capacity of slice4:", cap(slice4))
-
-	fmt.Println("------------------------------------------------------------")
-
-	var slice5 []int
-
-	fmt.Println(slice5 == nil) // true
-	fmt.Println("Length of slice5:", len(slice5))
-	fmt.Println("Capacity of slice5:", cap(slice5))
-
-	fmt.Println("------------------------------------------------------------")
-
-	var x []int         // nil
-	y := []int{}        // vazio, mas não nil
-	z := make([]int, 0) // vazio, mas não nil
-
-	fmt.Println(x == nil) // true
-	fmt.Println(y == nil) // false
-	fmt.Println(z == nil) // false
+	fmt.Println(matrix)
+	fmt.Println(matrix3D)
 }
