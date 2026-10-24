@@ -2,50 +2,56 @@ package arrays_and_slices
 
 import "fmt"
 
-var MOVIES_ON_DB = []string{
-	"The Shawshank Redemption",
-	"The Godfather",
-	"The Dark Knight",
-	"Pulp Fiction",
-	"The Lord of the Rings: The Return of the King",
-	"Schindler's List",
-	"Fight Club",
-	"Inception",
-	"Forrest Gump",
-	"The Matrix",
-	"Goodfellas",
-	"Star Wars: Episode IV - A New Hope",
-	"The Silence of the Lambs",
-	"The Usual Suspects",
-	"Léon: The Professional",
-	"Saving Private Ryan",
-	"Gladiator",
-}
-
 func Slices() {
-	// Performance with slices
-	resultsFromApi := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10} // think it as the ids from favorite movies
+	// Full slice expression
+	/*
+		arr := []int{1, 2, 3, 4, 5}
 
-	// Pre allocate our slice of movies to have the same size from resultsFromApi, since we know the size of the results from the API will be 10
-	movies := make([]string, 0, len(resultsFromApi)) // make(type, length, capacity), 0 is the initial length from our slice in this case
+		slice := arr[:2:2] // full slice expression [start:end:capacity] - slice of arr from index 0 to 2 with capacity 2
 
-	for _, id := range resultsFromApi {
-		movie := MOVIES_ON_DB[id]
+		fmt.Println("Array:", arr)
+		fmt.Println("Slice:", slice)
+		fmt.Println("Slice capacity:", cap(slice))
+	*/
 
-		fmt.Println("Movies length", len(movies), "Movies capacity", cap(movies))
+	// Boundary check = go make a check to ensure that the index is within the bounds of the slice. If you try to access an index that is out of range, Go will panic and terminate the program.
+	/*
+		slice := []int{1, 2, 3, 4}
+		fmt.Println("Slice:", slice)
+		fmt.Println("Slice element:", slice[5]) // This will cause a runtime panic: index out of range
+	*/
 
-		movies = append(movies, movie)
+	// slice := []int{1, 2, 3, 4}
 
-		fmt.Println("Movies length", len(movies), "Movies capacity", cap(movies))
-	}
+	// BoundaryCheck(slice)
 
-	fmt.Println(movies)
+	// changeFirst(slice) // This will not change the original slice, because the function receives a copy of the slice, not the original slice.
+	slice := [4]int{1, 2, 3, 4} // This is an array, not a slice. Arrays are passed by value, so the function will receive a copy of the array, not the original array.
+	changeFirst(slice)
+
+	fmt.Println("Slice1:", slice)
+
+	slice2 := []int{1, 2, 3, 4}
+	changeFirstSlice(slice2) // This will change the original slice, because the function receives a reference/pointer to the slice, not a copy of the slice.
+
+	fmt.Println("Slice2:", slice2)
 }
 
-func Matrix() {
-	matrix := [][]int{}
-	matrix3D := [][][]int{}
+func BoundaryCheck(slice []int) {
+	_ = slice[3] // Accessing the fourth element (index 3) to demonstrate boundary check, if this line result in an panic error, the next lines will not be executed. Resulting in a good performance, because the program will terminate immediately without executing the next lines of code.
 
-	fmt.Println(matrix)
-	fmt.Println(matrix3D)
+	// OBS: run this command [go run -gcflags="-d=ssa/check_bce" .] on the terminal to see the boundary check optimization in action. The compiler will optimize away the boundary check for the slice access, resulting in better performance.
+
+	fmt.Println(slice[0])
+	fmt.Println(slice[1])
+	fmt.Println(slice[2])
+	fmt.Println(slice[3])
+}
+
+func changeFirst(slice [4]int) {
+	slice[0] = 10
+}
+
+func changeFirstSlice(slice []int) {
+	slice[0] = 10
 }

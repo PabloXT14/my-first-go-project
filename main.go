@@ -6,5 +6,4 @@ import (
 
 func main() {
 	arrays_and_slices.Slices()
-	arrays_and_slices.Matrix()
 }
