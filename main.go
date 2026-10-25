@@ -1,9 +1,9 @@
 package main
 
 import (
-	arrays_and_slices "my-first-go-project/11_arrays_and_slices"
+	maps "my-first-go-project/12_maps"
 )
 
 func main() {
-	arrays_and_slices.Slices()
+	maps.Execute()
 }
