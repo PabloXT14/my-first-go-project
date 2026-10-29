@@ -1,9 +1,9 @@
 package main
 
 import (
-	maps "my-first-go-project/12_maps"
+	structs_and_methods "my-first-go-project/13_structs_methods"
 )
 
 func main() {
-	maps.Execute()
+	structs_and_methods.Execute()
 }
