@@ -1,9 +1,9 @@
 package main
 
 import (
-	structs_and_methods "my-first-go-project/13_structs_methods"
+	interfaces "my-first-go-project/14_interfaces"
 )
 
 func main() {
-	structs_and_methods.Execute()
+	interfaces.Execute()
 }
