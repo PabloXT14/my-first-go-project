@@ -1,9 +1,9 @@
 package main
 
 import (
-	errors "my-first-go-project/16_errors"
+	readers_and_writers "my-first-go-project/17_readers_and_writers"
 )
 
 func main() {
-	errors.Execute()
+	readers_and_writers.Execute()
 }
