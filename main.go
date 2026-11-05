@@ -1,9 +1,9 @@
 package main
 
 import (
-	generics "my-first-go-project/18_generics"
+	goroutines_and_contexts "my-first-go-project/19_goroutines_and_contexts"
 )
 
 func main() {
-	generics.Execute()
+	goroutines_and_contexts.Execute()
 }
