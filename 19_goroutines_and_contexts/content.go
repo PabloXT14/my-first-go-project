@@ -1,7 +1,10 @@
 package goroutines_and_contexts
 
 import (
+	"context"
+	"errors"
 	"fmt"
+	"net/http"
 	"sync"
 	"time"
 )
@@ -35,7 +38,16 @@ func Execute() {
 
 	// fmt.Println("All tasks completed.")
 
-	concurrentExample()
+	// concurrentExample()
+
+	// CONTEXT EXAMPLE
+	// contextExample()
+
+	// SIMULATE A TIMEOUT ON REQUEST
+	// simulateATimeoutOnRequest()
+
+	// CONTEXT WITH GOROUTINES EXAMPLE
+	contextWithGoroutinesExample()
 }
 
 func printMessage(message string) {
@@ -88,4 +100,116 @@ func concurrentExample() {
 	wg.Wait()
 
 	fmt.Println("Time taken (concurrent):", time.Since(start))
+}
+
+// CONTEXT
+
+func contextExample() {
+	/*
+		Context Definition:
+
+		Eles ajudam a controlar a execução de operações concorrentes, principalmente quando precisamos trabalhar com timeouts, cancelamentos e comunicação entre Goroutines.
+
+		O Context é muito utilizado em aplicações que realizam requisições HTTP, consultas ao banco de dados e outras operações que podem demorar para terminar.
+	*/
+
+	ctx, cancel := context.WithTimeout(
+		context.Background(),
+		2*time.Second,
+	)
+
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(
+		ctx,
+		http.MethodGet,
+		"https://jsonplaceholder.typicode.com/posts",
+		nil,
+	)
+
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return
+	}
+
+	response, err := http.DefaultClient.Do(req)
+
+	if err != nil {
+		if errors.Is(err, context.DeadlineExceeded) {
+			fmt.Println("Request timed out.")
+			return
+		}
+
+		fmt.Println("Error making request:", err)
+		return
+	}
+
+	defer response.Body.Close()
+
+	fmt.Println("Status:", response.Status)
+	fmt.Println("Status code:", response.StatusCode)
+}
+
+func simulateATimeoutOnRequest() {
+	ctx, cancel := context.WithTimeout(
+		context.Background(),
+		2*time.Second,
+	)
+
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(
+		ctx,
+		http.MethodGet,
+		"https://httpbin.org/delay/5",
+		nil,
+	)
+
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return
+	}
+
+	_, err = http.DefaultClient.Do(req)
+
+	if err != nil {
+		if errors.Is(err, context.DeadlineExceeded) {
+			fmt.Println("Request timed out.")
+			return
+		}
+
+		fmt.Println("Error making request:", err)
+		return
+	}
+
+	fmt.Println("Request completed successfully.")
+}
+
+// CONTEXT WITH GOROUTINES
+
+func worker(ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			fmt.Println("Worker cancelled.")
+			return
+		default:
+			fmt.Println("Worker is working...")
+			time.Sleep(500 * time.Millisecond)
+		}
+	}
+}
+
+func contextWithGoroutinesExample() {
+	ctx, cancel := context.WithCancel(
+		context.Background(),
+	)
+
+	go worker(ctx)
+
+	time.Sleep(2 * time.Second)
+
+	cancel() // Cancela o contexto, sinalizando para a goroutine parar
+
+	time.Sleep(500 * time.Millisecond) // Aguarda um pouco para que a goroutine termine
 }
